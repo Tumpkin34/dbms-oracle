@@ -1,0 +1,316 @@
+/*PLAYER 테이블에서 TEMA_ID가 'K01'인 선수 검색*/
+SELECT * FROM PLAYER
+WHERE TEAM_ID = 'K01';
+
+/*PLAYER 테이블에서 TEAM_ID가 'K01'이 아닌 선수 검색*/
+SELECT * FROM PLAYER
+WHERE TEAM_ID <> 'K01';
+
+/*PLAYER 테이블에서 WEIGHT가 70이상이고 80이하인 선수 검색*/
+SELECT * FROM PLAYER
+/*WHERE WEIGHT >= 70 AND WEIGHT <= 80; */
+WHERE WEIGHT BETWEEN 70 AND 80;
+
+/*PLAYER 테이블에서 TEAM_ID가 'K03'이고 HEIGHT가 180미만인 선수 검색*/
+SELECT * FROM PLAYER
+WHERE TEAM_ID = 'K03' AND HEIGHT < 180;
+
+/*PLAYER 테이블에서 TEAM_ID가 'K06'이고 NICKNAME이 '제리'인 선수 검색*/
+SELECT * FROM PLAYER
+WHERE TEAM_ID = 'K06' AND NICKNAME = '제리';
+
+/*PLAYER 테이블에서 HEIGHT가 170이상이고 WEIGHT가 80이상인 선수 이름 검색*/
+SELECT * FROM PLAYER
+WHERE HEIGHT >= 170 AND WEIGHT >= 80;
+
+/*STADIUM 테이블에서 SEAT_COUNT가 30000 초과이고 41000이하인 경기장 검색*/
+SELECT * FROM STADIUM
+WHERE SEAT_COUNT > 30000 AND SEAT_COUNT < 41000;
+
+/*PLAYER 테이블에서 TEAM_ID가 'K02'이거나 'K07'이고 포지션은 'MF'인 선수 검색*/
+SELECT * FROM PLAYER
+WHERE (TEAM_ID = 'K02' OR TEAM_ID = 'K07') AND "POSITION" = 'MF';
+
+
+/***커밋 수동으로 바꾸고 하기******/
+/*PLAYER 테이블에서 TEAM_ID가 'K01'인 선수 이름을 내 이름으로 바꾸기*/
+UPDATE PLAYER
+SET PLAYER_NAME = '황지수'
+WHERE TEAM_ID = 'K01';
+SELECT * FROM PLAYER
+WHERE TEAM_ID = 'K01';
+
+ROLLBACK;
+COMMIT;
+
+/*PLAYER 테이블에서 POSITION이 'MF'인 선수 삭제하기*/
+DELETE FROM PLAYER
+WHERE "POSITION" = 'MF'; 
+SELECT * FROM PLAYER
+WHERE "POSITION" = 'MF';
+
+/*PLAYER 테이블에서 HEIGHT가 180이상인 선수 삭제하기*/
+DELETE FROM PLAYER
+WHERE HEIGHT >= 180;
+SELECT * FROM PLAYER
+WHERE HEIGHT >= 180;
+
+
+/*NULL*/
+/*PLAYER 테이블에서 NICKNAME이 NULL인 선수 검색*/
+SELECT * FROM PLAYER
+WHERE NICKNAME IS NULL;
+
+/*PLAYER 테이블에서 POSITION이 NULL인 선수 검색*/
+SELECT * FROM PLAYER
+WHERE "POSITION" IS NULL;
+
+/*PLAYER 테이블에서 NICKNAME이 NULL인 선수를 '없음'으로 변경 후 검색*/
+SELECT PLAYER_NAME, NVL(NICKNAME,'없음') FROM PLAYER;
+
+/*PLAYER 테이블에서 POSITION이 NULL인 선수를 '미정'으로 변경 후 검색*/
+SELECT PLAYER_NAME, NVL("POSITION",'미정') FROM PLAYER;
+
+/*PLAYER 테이블에서 NATION이 등록되어 있으면 '등록', 아니면 '미등록'으로 검색*/
+SELECT PLAYER_NAME, NVL2(NATION,'등록','미등록') FROM PLAYER; 
+
+/*AS(ALIAS) : 별칭
+ * SELECT : 컬럼명 뒤에 AS 또는 한 칸 띄어쓰고 작성한다.
+ * */
+
+/*선수 이름과 생일 조회*/
+/*PLAYER 테이블에서 BACK_NO를 "등 번호"로, NICKNAME을 "선수 별명"으로 변경하여 검색*/
+SELECT BACK_NO "등 번호", NICKNAME "선수 별명" FROM PLAYER;
+
+/*PLAYER 테이블에서 BACK_NO를 "등 번호"로, NICKNAME을 "선수 별명"으로 변경하여 검색*/
+/*NICKNAME이 NULL일 경우 없음으로 변경*/
+SELECT NVL(NICKNAME, '없음') "선수 별명" FROM PLAYER;
+
+/*CONCATENATION : 연결, ||
+ *  - JAVA에서 +와 동일하다.
+ * */
+/*누구누구의 영어이름은 머머입니다.*/
+SELECT PLAYER_NAME || '의 영어이름은 ' || E_PLAYER_NAME || NVL2(E_PLAYER_NAME,'입니다','없습니다')  FROM PLAYER;
+SELECT * FROM PLAYER;
+/*누구누구의 포지션은 머머입니다.*/
+SELECT PLAYER_NAME || '의 포지션은 ' || NVL("POSITION",'미정') || '입니다' FROM PLAYER;
+
+/*LIKE : 포함된 문자열 값을 찾구, 문자의 개수도 제한을 줄 수 있다.
+ * 
+ * [컬럼명] LIKE '';
+ * 
+ * % : 모든 것
+ * _ : 글자 수
+ * 
+ * 예)
+ * '%A' : A로 끝나는 모든 값 (FDSFDSFDSA, 21FDSA,..)
+ * 'A%' : A로 시작하는 모든 값(ADSFS, A2194MD,..)
+ * '%A%' : A가 포함된 모든 값(FDSAFDS, ADFSF, FDSFSDA,..)
+ * 'A__' : A로 시작하며 3글자인 값(ABC, ADD, APP,..)
+ * '_A' : A로 끝나며 2글자인 값(BA, CA, ...)
+ * */
+/*'천마'로 끝나는 팀 이름 찾기*/
+SELECT * FROM TEAM
+WHERE TEAM_NAME LIKE '%천마';
+
+/*PLAYER 테이블에서 김씨 찾기*/
+SELECT * FROM PLAYER
+WHERE PLAYER_NAME LIKE '김%';
+
+/*PLAYER 테이블에서 김씨 두 자 찾기*/
+SELECT * FROM PLAYER
+WHERE PLAYER_NAME LIKE '김_';
+
+/*PLAYER 테이블에서 김씨와 이씨 찾기*/
+SELECT * FROM PLAYER
+WHERE PLAYER_NAME LIKE '김%' OR PLAYER_NAME LIKE '이%';
+
+/*PLAYER 테이블에서 이씨가 아닌 사람 찾기*/
+SELECT * FROM PLAYER
+WHERE NOT PLAYER_NAME LIKE '이%';
+
+/* 집계 함수 : 결과 1개
+ * ※ 주의사항 : NULL은 포함시키지 않는다.
+ * ※ WHERE절에서 사용 불가
+ * 
+ * 평균 : AVG(컬럼)
+ * 최대값 : MAX(컬럼)
+ * 최소값 : MIN(컬럼)
+ * 총 합 : SUM(컬럼)
+ * 개수 : COUNT(컬럼)
+ * */
+/*PLAYER 테이블에서 HEIGHT 개수 검색(NULL 포함시켜서 COUNT 하기)*/
+SELECT COUNT(NVL(HEIGHT,'0')) FROM PLAYER;
+
+/*정렬
+ * ORDER BY 컬럼명,... ASC : 오름 차순
+ * ORDER BY 컬럼명,... DESC : 내림 차순
+ * */
+
+/*PLAYER 테이블에서 키 순, 몸무게 순으로 오름차순 검색*/
+/*NULL이 아닌 값만 검색*/
+/*첫번째 컬럼 값이 같으면 두번째 정렬을 한다.*/
+SELECT * FROM PLAYER
+WHERE NOT WEIGHT IS NULL AND NOT HEIGHT IS NULL
+ORDER BY HEIGHT, WEIGHT ASC;
+
+/* GROUP BY : ~별 (예: 포지션 별 평균 키)
+ * GROUP BY 컬럼명 HAVING 조건식
+ * ※ WHERE절에 우선적으로 처리할 조건식을 작성해야 속도가 빠르다.
+ * */
+/*PLAYER 테이블에서 포지션 종류 검색*/
+SELECT "POSITION" FROM PLAYER
+WHERE NOT "POSITION" IS NULL
+GROUP BY "POSITION";
+
+/*PLAYER 테이블에서 몸무게가 80이상인 선수들의 평균 키가 180이상인 포지션 검색*/
+SELECT "POSITION" , MIN(WEIGHT), AVG(HEIGHT) FROM PLAYER
+WHERE WEIGHT >= 80
+GROUP BY "POSITION" HAVING AVG(HEIGHT) >= 180;
+
+/* EMPLOYEES 테이블에서 JOB_ID별 평균 SALARY가 10000미만인 JOB_ID 검색
+ * JOB_ID는 알파벳 순으로 정렬(오름차순)
+ * */
+SELECT JOB_ID FROM EMPLOYEES
+GROUP BY "JOB_ID" HAVING AVG(SALARY)<10000
+ORDER BY JOB_ID ASC;
+
+/* SUB QUERY
+ * FROM절 : IN LINE VIEW
+ * SELECT절 : SCALAR SUB QUERY
+ * WHERE절 : SUB QUERY
+ * */
+
+/*PLAYER 테이블에서 TEAM_ID가 'K01'인 선수 중 POSITION이 'GK'인 선수*/
+SELECT * FROM (SELECT * FROM PLAYER WHERE TEAM_ID = 'K01' AND "POSITION" = 'GK');
+
+/*정남일 선수가 소속된 팀의 선수들 조회(서브쿼리)*/
+SELECT TEAM_ID  FROM PLAYER
+WHERE PLAYER_NAME = '정남일';
+
+SELECT * FROM PLAYER
+WHERE TEAM_ID = (SELECT TEAM_ID FROM PLAYER WHERE PLAYER_NAME = '정남일');
+
+/*PLAYER 테이블에서 전체 평균 키와 포지션별 평균 키 구하기(스칼라)*/
+SELECT AVG(HEIGHT) FROM PLAYER;
+SELECT "POSITION", AVG(HEIGHT) FROM PLAYER
+GROUP BY "POSITION";
+
+SELECT AVG(HEIGHT), (SELECT AVG (HEIGHT) FROM PLAYER) FROM PLAYER
+WHERE NOT "POSITION" IS NULL 
+GROUP BY "POSITION";
+
+/*          이쪽 AVG의 열의 개수는 1       이쪽 AVG의 열의 개수는 4         하나의 값을 4번 쓸 수 는 있지만 4개의 값을 하나로 만들기에는 어떤값을 넣을지 모르기 때문에 오류*/
+/*메인 쿼리의 개수를 따라 간다 따라서 메인쿼리의 열의 개수가 1이기에 서브쿼리의 열의 개수인 4는 들어갈 수 없다.*/
+SELECT AVG(HEIGHT), (SELECT AVG (HEIGHT) FROM PLAYER GROUP BY "POSITION") FROM PLAYER;
+
+/*경기장 중 경기 일정이 20120501~20120502 사이에 있는 경기장 전체 정보 조회(서브쿼리)*/
+SELECT * FROM STADIUM
+WHERE STADIUM_ID  IN(SELECT STADIUM_ID FROM SCHEDULE WHERE SCHE_DATE BETWEEN '20120501'AND'20120502');
+
+/*※※※※※※※※※※※※※※※※※※※※※※※
+ * TCL 직접 제어하여 반드시 결과 확인 후 롤백하기
+ * ※※※※※※※※※※※※※※※※※※※※※※
+ * */
+/*EMPLOYEES 테이블에서 평균 급여보다 낮은 사원들의 급여를 20% 인상*/
+
+SELECT AVG(SALARY)  FROM EMPLOYEES;
+SELECT * FROM EMPLOYEES;
+
+UPDATE EMPLOYEES
+SET SALARY = SALARY * 1.2
+WHERE SALARY < (SELECT AVG(SALARY)  FROM EMPLOYEES);
+
+/*PLAYER 테이블에서 NICKNAME이 NULL인 선수들을 정태민 선수의 닉네임으로 바꾸기*/
+UPDATE PLAYER
+SET NICKNAME = (SELECT NICKNAME FROM PLAYER WHERE PLAYER_NAME = '정태민')
+WHERE NICKNAME IS NULL ;
+
+SELECT * FROM PLAYER
+WHERE NICKNAME  IS NULL;
+
+
+/*PLAYER 테이블에서 평균 키보다 큰 선수들 삭제*/
+SELECT AVG(HEIGHT) FROM PLAYER;
+DELETE FROM PLAYER
+WHERE HEIGHT > (SELECT AVG(HEIGHT) FROM PLAYER);
+
+
+/*JOIN*/
+SELECT * FROM TBL_OWNER;
+SELECT * FROM TBL_PET;
+SELECT * FROM 
+TBL_OWNER O JOIN TBL_PET P
+ON O.OWNER_PHONE_NUMBER  = P.OWNER_PHONE_NUMBER;
+
+
+/*EMP 테이블 사원번호로 DEPT 테이블의 지역 검색*/
+/*선행 테이블은 행의 개수가 더 적은 것으로 선택한다.*/
+SELECT EMPNO, LOC FROM 
+DEPT D JOIN EMP E
+ON E.DEPTNO = D.DEPTNO;
+
+/*PLAYER 테이블에서 송종국 선수가 속한 팀의 전화번호 검색하기*/
+SELECT TEL FROM
+TEAM T JOIN PLAYER P
+ON P.TEAM_ID = T.TEAM_ID AND P.PLAYER_NAME = '송종국';
+
+/*JOBS 테이블에서 JOB_ID로 직원들의 JOB_TITLE, EMAIL, 성, 이름 검색*/
+SELECT * FROM EMPLOYEES;
+SELECT JOB_TITLE, EMAIL, FIRST_NAME || LAST_NAME NAME FROM 
+JOBS F JOIN EMPLOYEES E
+ON F.JOB_ID = E.JOB_ID;
+
+/*EMP 테이블의 SAL을 SALGRADE 등급으로 나누기*/
+SELECT ENAME ,GRADE, SAL FROM 
+EMP E JOIN SALGRADE  S
+ON E.SAL BETWEEN S.LOSAL AND S.HISAL;
+/*EMPLOYEES 테이블에서 HIREDATE가 2003~2005년까지인 사원의 정보와 부서명 검색*/
+SELECT * FROM EMPLOYEES;
+SELECT * FROM EMPLOYEES
+WHERE HIRE_DATE BETWEEN '20030101' AND '20051231';
+
+/*JOB_TITLE 중 'Manager'라는 문자열이 포함된 직업들의 평균 연봉을 JOB_TITLE별로 검색*/
+SELECT JOB_TITLE ,AVG(SALARY) FROM
+JOBS J JOIN EMPLOYEES E
+ON J.JOB_ID = E.JOB_ID
+WHERE J.JOB_ID IN (SELECT JOB_ID FROM JOBS
+WHERE JOB_TITLE LIKE '%Manager%')
+GROUP BY JOB_TITLE;
+
+SELECT JOB_ID, AVG(SALARY) FROM EMPLOYEES
+GROUP BY JOB_ID;
+
+/*EMP 테이블에서 ENAME에 L이 있는 사원들의 DNAME과 LOC 검색*/
+SELECT ENAME, DNAME, LOC FROM
+DEPT D JOIN EMP E
+ON D.DEPTNO = E.DEPTNO
+WHERE ENAME LIKE '%L%';
+
+/*축구 선수들 중에서 각 팀별로 키가 가장 큰 선수들 검색(JOIN 사용)*/(A,B) IN(C,D) 
+ SELECT * FROM PLAYER;
+SELECT * FROM TEAM;
+
+SELECT * FROM
+PLAYER P JOIN (SELECT TEAM_ID, MAX(HEIGHT) MAX_HEIGHT FROM PLAYER
+GROUP BY TEAM_ID) P2
+ON P.TEAM_ID = P2.TEAM_ID AND P.HEIGHT  = P2.MAX_HEIGHT;
+
+
+SELECT MAX(HEIGHT) FROM PLAYER
+GROUP BY TEAM_ID;
+
+SELECT * FROM 
+PLAYER P JOIN TEAM T 
+ON P.TEAM_ID = T.TEAM_ID
+JOIN (SELECT MAX(HEIGHT) AS MAXHEIGHT FROM PLAYER GROUP BY TEAM_ID ) C ON (P.HEIGHT = C.MAXHEIGHT);
+
+/*축구 선수들 중에서 각 팀별로 키가 가장 큰 선수들 검색(서브쿼리 사용)*/
+SELECT *  FROM PLAYER
+WHERE (TEAM_ID, HEIGHT)  IN (SELECT TEAM_ID, MAX(HEIGHT) FROM PLAYER GROUP BY TEAM_ID);
+
+/*EMP 테이블에서 사원의 이름과 매니저 이름을 검색*/
+SELECT E.ENAME 사원, M.ENAME  FROM
+EMP E JOIN EMP M
+ON E.MGR = M.EMPNO;
+
