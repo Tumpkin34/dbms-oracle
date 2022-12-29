@@ -93,7 +93,7 @@
 4. TRUNCATE : 테이블 내용 전체 삭제<br>
 	TRUNCATE TABLE [테이블명];<br>
     
-제약조건 : 
+# 제약조건
 	CONSTRAINT 이름 : 제약조건의 이름을 만듬(안만들면 알아서 만듬)
 	UNIQUE : UK로 만들어줌(중복이 되면 오류)
 	DEFAULT 기본값: 값이 전달되지 않으면 뒤에 설정한 값을 넣는다.
