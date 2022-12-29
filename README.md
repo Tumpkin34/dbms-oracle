@@ -135,7 +135,7 @@
 2. 개념적 설계(개념 모델링)<br>
 3. 논리적 설계(논리 모델링)<br>
 4. 물리적 설계<br>
-5. 5. 구현<br>
+5. 구현<br>
 
 # DML(Data Manipulation Language) : 데이터 조작어
 1. SELECT : 조회<br>
@@ -143,7 +143,7 @@ SELECT [컬럼명,...]<br>
 FROM [테이블명]<br>
 WHERE [조건식];<br>
 
-2. INSERT : 추가<br>
+2. INSERT : 추가
 - 컬럼을 생략할 수 있다.<br>
  INSERT INTO [테이블명] ([컬럼명,...])<br>
  VALUES([값,...]);<br>
