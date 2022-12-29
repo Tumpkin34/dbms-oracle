@@ -71,25 +71,25 @@
 # ▶DDL(Data Definition Language)
     테이블 조작, 제어 관련 쿼리문
 
-	1. CREATE : 테이블 생성<br>
-		CREATE TABLE[테이블명]([컬럼명][자료형(용량)][제약조건],...);//대괄호는 쓰는게 아니다.<br>
+1. CREATE : 테이블 생성<br>
+	CREATE TABLE[테이블명]([컬럼명][자료형(용량)][제약조건],...);//대괄호는 쓰는게 아니다.<br>
 
-	2. DROP : 테이블 삭제<br>
-		DROP TABLE [테이블명]<br>
+2. DROP : 테이블 삭제<br>
+	DROP TABLE [테이블명]<br>
 
-	3. ALTER : 테이블 수정<br>
-		ALTER TABLE [테이블명]<br>
-		- 테이블명 수정<br>
-			RENAME TO [새로운 테이블명]<br>
-		- 컬럼 추가<br>
-			ADD([새로운 컬럼명][자료형(용량)])<br>
-		- 컬럼명 변경<br>
-			RENAME COLUMN [기존 컬럼명] TO [새로운 컬럼명]<br>
-		- 컬럼 삭제<br>
-			DROP COLUMN [컬럼명]<br>
-		- 컬럼 수정<br>
-			MODIFY([기존 컬럼명][자료형(용량)]);<br>
+3. ALTER : 테이블 수정<br>
+	ALTER TABLE [테이블명]<br>
+	- 테이블명 수정<br>
+		RENAME TO [새로운 테이블명]<br>
+	- 컬럼 추가<br>
+		ADD([새로운 컬럼명][자료형(용량)])<br>
+	- 컬럼명 변경<br>
+		RENAME COLUMN [기존 컬럼명] TO [새로운 컬럼명]<br>
+	- 컬럼 삭제<br>
+		DROP COLUMN [컬럼명]<br>
+	- 컬럼 수정<br>
+		MODIFY([기존 컬럼명][자료형(용량)]);<br>
 
-	4. TRUNCATE : 테이블 내용 전체 삭제<br>
-		TRUNCATE TABLE [테이블명];<br>
+4. TRUNCATE : 테이블 내용 전체 삭제<br>
+	TRUNCATE TABLE [테이블명];<br>
     
